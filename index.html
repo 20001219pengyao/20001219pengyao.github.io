@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遗传性周围神经病基因检测建议</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-selector button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .language-selector button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 15px 0;
+        }
+
+        .nav-links li {
+            margin-right: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+            background-color: #f0f0f0;
+        }
+
+        section {
+            padding: 60px 0;
+            background-color: white;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+        }
+
+        h3 {
+            color: #555;
+            margin: 20px 0 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .overview-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .overview-card h4 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .step-number {
+            background-color: #007bff;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        .genes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        .genes-table th, .genes-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .genes-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .genes-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .questionnaire {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .question input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .question input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .question textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .recommendation {
+            background-color: #e7f3ff;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #007bff;
+        }
+
+        .report-guide {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .report-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .report-section:last-child {
+            border-bottom: none;
+        }
+
+        .appointment-form {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .references {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .references ul {
+            list-style-type: none;
+        }
+
+        .references li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .references li:before {
+            content: "▪";
+            position: absolute;
+            left: 0;
+            color: #007bff;
+        }
+
+        .references a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .references a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .footer-section p, .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style-type: none;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .privacy-notice {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .nav-links {
+                padding: 10px 0;
+            }
+
+            .nav-links li {
+                margin-right: 15px;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+
+            .overview-grid,
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .genes-table {
+                font-size: 0.9rem;
+            }
+
+            .genes-table th, .genes-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">遗传性周围神经病基因检测</div>
+            <div class="language-selector">
+                <button onclick="switchLanguage('zh')">中文</button>
+                <button onclick="switchLanguage('en')">English</button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview">疾病概述</a></li>
+                <li><a href="#process">检测流程</a></li>
+                <li><a href="#genes">致病基因</a></li>
+                <li><a href="#questionnaire">评估问卷</a></li>
+                <li><a href="#recommendation">检测建议</a></li>
+                <li><a href="#report">报告解读</a></li>
+                <li><a href="#appointment">专家咨询</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="overview">
+            <h2>遗传性周围神经病概述与分类</h2>
+            <p>遗传性周围神经病是一组由遗传因素引起的周围神经系统疾病，主要影响周围神经的功能。这些疾病通常具有家族遗传性，可导致感觉、运动或自主神经功能障碍。</p>
+            
+            <h3>疾病分类</h3>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h4> Charcot-Marie-Tooth病 (CMT)</h4>
+                    <p>最常见的遗传性周围神经病，主要表现为进行性四肢远端肌无力和萎缩，伴有感觉障碍。根据遗传方式和病理特点，可分为CMT1型、CMT2型等多个亚型。</p>
+                </div>
+                <div class="overview-card">
+                    <h4>遗传性感觉神经病 (HSN)</h4>
+                    <p>以感觉障碍为主的遗传性周围神经病，可分为多种类型，如HSN1型、HSN2型等，主要表现为感觉丧失、溃疡和感染。</p>
+                </div>
+                <div class="overview-card">
+                    <h4>遗传性运动神经病 (HMN)</h4>
+                    <p>主要影响运动神经的遗传性疾病，表现为进行性肌无力和萎缩，感觉功能相对保留。</p>
+                </div>
+                <div class="overview-card">
+                    <h4>其他遗传性周围神经病</h4>
+                    <p>包括遗传性压迫易感性神经病、淀粉样变性周围神经病等少见类型。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="process">
+            <h2>基因检测流程说明</h2>
+            <p>基因检测是诊断遗传性周围神经病的重要手段，通过检测特定基因的突变，可以明确疾病的病因和遗传方式，为治疗和遗传咨询提供依据。</p>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>咨询与评估</h4>
+                    <p>医生会根据患者的症状、家族史等进行初步评估，确定是否需要进行基因检测。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>样本采集</h4>
+                    <p>通常采集外周血样本，少数情况下可能需要其他类型的样本。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>基因检测</h4>
+                    <p>实验室对样本进行DNA提取和基因测序，检测相关基因的突变。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>结果分析</h4>
+                    <p>专业人员对检测结果进行分析，确定是否存在致病突变。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h4>报告解读</h4>
+                    <p>医生向患者解释检测结果，提供治疗建议和遗传咨询。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="genes">
+            <h2>常见致病基因介绍</h2>
+            <p>遗传性周围神经病与多个基因的突变有关，不同基因的突变可导致不同类型的疾病。以下是一些常见的致病基因：</p>
+            
+            <table class="genes-table">
+                <thead>
+                    <tr>
+                        <th>基因名称</th>
+                        <th>相关疾病</th>
+                        <th>突变类型</th>
+                        <th>临床特点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PMP22</td>
+                        <td>CMT1A、HNPP</td>
+                        <td>重复、缺失</td>
+                        <td>脱髓鞘型周围神经病</td>
+                    </tr>
+                    <tr>
+                        <td>MPZ</td>
+                        <td>CMT1B、CMT2I/J</td>
+                        <td>点突变</td>
+                        <td>脱髓鞘或轴索型周围神经病</td>
+                    </tr>
+                    <tr>
+                        <td>GDAP1</td>
+                        <td>CMT4A</td>
+                        <td>点突变</td>
+                        <td>常染色体隐性遗传，严重表型</td>
+                    </tr>
+                    <tr>
+                        <td>MFN2</td>
+                        <td>CMT2A</td>
+                        <td>点突变</td>
+                        <td>轴索型周围神经病，可能伴有视神经萎缩</td>
+                    </tr>
+                    <tr>
+                        <td>SPG7</td>
+                        <td>遗传性痉挛性截瘫伴周围神经病</td>
+                        <td>点突变</td>
+                        <td>同时影响脊髓和周围神经</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="questionnaire">
+            <h2>检测前评估问卷</h2>
+            <p>请完成以下问卷，帮助我们评估您是否适合进行基因检测，以及应该检测哪些基因：</p>
+            
+            <div class="questionnaire">
+                <div class="question">
+                    <label>1. 您是否有以下症状？（可多选）</label>
+                    <div>
+                        <input type="radio" name="symptoms" value="muscle_weakness"> 肌肉无力
+                        <input type="radio" name="symptoms" value="sensory_loss"> 感觉丧失
+                        <input type="radio" name="symptoms" value="muscle_atrophy"> 肌肉萎缩
+                        <input type="radio" name="symptoms" value="foot_deformity"> 足畸形
+                        <input type="radio" name="symptoms" value="none"> 无
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>2. 您的症状出现多久了？</label>
+                    <div>
+                        <input type="radio" name="duration" value="less_than_1"> 少于1年
+                        <input type="radio" name="duration" value="1-5"> 1-5年
+                        <input type="radio" name="duration" value="more_than_5"> 超过5年
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>3. 您的家族中是否有类似疾病患者？</label>
+                    <div>
+                        <input type="radio" name="family_history" value="yes"> 是
+                        <input type="radio" name="family_history" value="no"> 否
+                        <input type="radio" name="family_history" value="unknown"> 不知道
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>4. 如果有家族史，请描述患者与您的关系及症状：</label>
+                    <textarea name="family_details" placeholder="请详细描述"></textarea>
+                </div>
+                
+                <div class="question">
+                    <label>5. 您是否已经做过其他检查？（如肌电图、神经传导速度等）</label>
+                    <div>
+                        <input type="radio" name="other_tests" value="yes"> 是
+                        <input type="radio" name="other_tests" value="no"> 否
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label>6. 如果做过其他检查，请简要描述结果：</label>
+                    <textarea name="test_results" placeholder="请详细描述"></textarea>
+                </div>
+                
+                <button class="btn" onclick="generateRecommendation()">提交评估</button>
+            </div>
+        </section>
+
+        <section id="recommendation">
+            <h2>个性化检测建议生成</h2>
+            <p>基于您的评估结果，我们将为您提供个性化的基因检测建议：</p>
+            
+            <div class="recommendation" id="recommendation-content">
+                <p>请先完成检测前评估问卷，我们将根据您的回答生成个性化检测建议。</p>
+            </div>
+        </section>
+
+        <section id="report">
+            <h2>检测后报告解读指南</h2>
+            <p>基因检测报告可能包含复杂的专业术语，本指南将帮助您理解报告的主要内容：</p>
+            
+            <div class="report-guide">
+                <div class="report-section">
+                    <h3>报告结构</h3>
+                    <p>基因检测报告通常包括以下部分：</p>
+                    <ul>
+                        <li><strong>患者信息：</strong>姓名、性别、年龄等基本信息</li>
+                        <li><strong>检测方法：</strong>使用的基因测序技术</li>
+                        <li><strong>检测基因：</strong>检测的具体基因列表</li>
+                        <li><strong>检测结果：</strong>是否发现致病突变</li>
+                        <li><strong>结果解释：</strong>突变的临床意义</li>
+                        <li><strong>建议：</strong>后续治疗和随访建议</li>
+                    </ul>
+                </div>
+                
+                <div class="report-section">
+                    <h3>结果类型</h3>
+                    <p>检测结果通常分为以下几种类型：</p>
+                    <ul>
+                        <li><strong> pathogenic（致病性）：</strong>该突变明确与疾病相关</li>
+                        <li><strong> likely pathogenic（可能致病性）：</strong>该突变很可能与疾病相关</li>
+                        <li><strong> variant of uncertain significance（意义不明确的变异）：</strong>该突变的临床意义尚不明确</li>
+                        <li><strong> likely benign（可能良性）：</strong>该突变很可能与疾病无关</li>
+                        <li><strong> benign（良性）：</strong>该突变与疾病无关</li>
+                    </ul>
+                </div>
+                
+                <div class="report-section">
+                    <h3>遗传咨询</h3>
+                    <p>如果检测结果为阳性，建议您咨询遗传咨询师，了解：</p>
+                    <ul>
+                        <li>疾病的遗传方式</li>
+                        <li>家庭成员的患病风险</li>
+                        <li>生育建议</li>
+                        <li>基因治疗的可能性</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="appointment">
+            <h2>专家咨询预约入口</h2>
+            <p>如果您需要进一步的专业咨询，请填写以下表单预约专家：</p>
+            
+            <div class="appointment-form">
+                <div class="form-group">
+                    <label>姓名</label>
+                    <input type="text" placeholder="请输入您的姓名">
+                </div>
+                
+                <div class="form-group">
+                    <label>性别</label>
+                    <select>
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>年龄</label>
+                    <input type="number" placeholder="请输入您的年龄">
+                </div>
+                
+                <div class="form-group">
+                    <label>联系电话</label>
+                    <input type="tel" placeholder="请输入您的联系电话">
+                </div>
+                
+                <div class="form-group">
+                    <label>电子邮箱</label>
+                    <input type="email" placeholder="请输入您的电子邮箱">
+                </div>
+                
+                <div class="form-group">
+                    <label>咨询类型</label>
+                    <select>
+                        <option value="diagnosis">诊断咨询</option>
+                        <option value="treatment">治疗咨询</option>
+                        <option value="genetic">遗传咨询</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>咨询内容</label>
+                    <textarea placeholder="请简要描述您的问题或症状"></textarea>
+                </div>
+                
+                <button class="btn">提交预约</button>
+            </div>
+        </section>
+
+        <section id="references">
+            <h2>权威医学参考文献</h2>
+            <div class="references">
+                <ul>
+                    <li>Charcot-Marie-Tooth Disease Overview. Genetics Home Reference. https://ghr.nlm.nih.gov/condition/charcot-marie-tooth-disease</li>
+                    <li>Berger P, Young P, Suter U. Hereditary neuropathies. Lancet. 2014;383(9927):1440-1452.</li>
+                    <li>Mersiyanova IN, Loginova ES, Nikolaev VO, et al. Genetics of Charcot-Marie-Tooth neuropathy: current state and future perspectives. Russ J Genet. 2018;54(10):1091-1103.</li>
+                    <li>Reilly MM, Shy ME, Blair IP. Charcot-Marie-Tooth disease. Lancet Neurol. 2018;17(12):1100-1112.</li>
+                    <li>Züchner S, Vance JM. Genetics of hereditary motor and sensory neuropathies. Curr Neurol Neurosci Rep. 2006;6(5):389-396.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="privacy-notice">
+            <h3>隐私保护声明</h3>
+            <p>我们严格遵守医疗信息隐私保护标准，您提供的所有个人信息和检测结果将被严格保密，仅用于医疗目的。未经您的明确同意，我们不会将您的信息分享给任何第三方。</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>关于我们</h4>
+                <p>我们致力于为遗传性周围神经病患者提供专业的基因检测建议和咨询服务，帮助患者获得准确的诊断和个性化的治疗方案。</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>联系我们</h4>
+                <ul>
+                    <li>电话：400-123-4567</li>
+                    <li>邮箱：info@genetest.com</li>
+                    <li>地址：北京市海淀区医学科技园</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="#overview">疾病概述</a></li>
+                    <li><a href="#process">检测流程</a></li>
+                    <li><a href="#genes">致病基因</a></li>
+                    <li><a href="#questionnaire">评估问卷</a></li>
+                    <li><a href="#appointment">专家咨询</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 多语言支持
+        function switchLanguage(lang) {
+            // 这里可以添加语言切换逻辑
+            alert(`语言已切换为${lang === 'zh' ? '中文' : 'English'}`);
+        }
+
+        // 生成个性化检测建议
+        function generateRecommendation() {
+            // 这里可以添加根据问卷回答生成建议的逻辑
+            const recommendationContent = document.getElementById('recommendation-content');
+            recommendationContent.innerHTML = `
+                <h3>个性化检测建议</h3>
+                <p>基于您的评估结果，我们建议您进行以下基因检测：</p>
+                <ul>
+                    <li>PMP22基因检测（适用于CMT1A）</li>
+                    <li>MPZ基因检测（适用于CMT1B）</li>
+                    <li>MFN2基因检测（适用于CMT2A）</li>
+                </ul>
+                <p>检测费用：约3000-5000元</p>
+                <p>检测周期：2-4周</p>
+                <button class="btn btn-secondary" onclick="downloadRecommendation()">下载检测建议</button>
+            `;
+        }
+
+        // 下载检测建议
+        function downloadRecommendation() {
+            // 这里可以添加下载逻辑
+            alert('检测建议已开始下载');
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
